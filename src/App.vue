@@ -35,7 +35,7 @@ export default {
       return this.$store.getters.users;
     },
     currentLayout() {
-      if (this.$route.name == 'Login') {
+      if (this.$route.name == 'Login' || this.$route.name == 'Register') {
         return 'login';
       }
 

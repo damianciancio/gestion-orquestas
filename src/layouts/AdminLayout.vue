@@ -34,9 +34,9 @@ export default {
   },
   computed: {
 	  title() {
-		  return this.$route.meta.link_name
-	  }
-  }
+		  return this.$route.meta.link_name;
+	  },
+  },
 };
 </script>
 <style lang="scss">

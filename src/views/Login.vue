@@ -10,7 +10,10 @@
                 <label>Contraseña</label>
                 <input v-model="password" class="form-control" type="password" />
             </div>
-            <button v-on:click="login" type="button" class="btn btn-primary">Iniciar Sesión</button>
+            <button v-on:click="login" type="button" class="btn btn-primary mb-3">Iniciar Sesión</button>
+            <div class="">
+                <span>¿No tenés una cuenta? <router-link :to="{name: 'Register'}">Registrate</router-link></span>
+            </div>
         </form>
     </div>
 </template>
