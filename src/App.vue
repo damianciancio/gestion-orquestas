@@ -16,11 +16,8 @@ import AdminLayout from './layouts/AdminLayout.vue';
 import UserLayout from './layouts/UserLayout.vue';
 import RegistrationLayout from './layouts/RegistrationLayout.vue';
 
+
 export default {
-  mounted() {
-    if (this.$route.name == 'Login') {
-    }
-  },
   components: {
     'admin-layout': AdminLayout,
     'user-layout': UserLayout,
@@ -34,13 +31,16 @@ export default {
     users() {
       return this.$store.getters.users;
     },
+    currentUserIsAdmin() {
+      return this.$store.getters.currentUserIsAdmin;
+    },
     currentLayout() {
       if (this.$route.name == 'Login' || this.$route.name == 'Register') {
         return 'login';
       }
 
       const { currentUser } = this.$store.getters;
-      if (currentUser && currentUser.is_admin == 1) {
+      if (currentUser && this.currentUserIsAdmin) {
         return 'admin';
       }
       return 'user';

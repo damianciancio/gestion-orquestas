@@ -43,15 +43,103 @@ const routes = [
     },
   },
   {
+    path: '/admin/resources',
+    name: 'Recursos',
+    component: () => import(/* webpackChunkName: "usermanagement" */ '../views/MusicalResources.vue'),
+    meta: {
+      requiresAuth: true,
+      is_admin: true,
+      link_name: 'Recursos'
+    },
+    redirect: { name: 'ResourcesList' },
+    children: [
+      {
+        path: '',
+        name: 'ResourcesList',
+        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/MusicalResourcesList.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Recursos'
+        },
+      },
+      {
+        path: '/add',
+        name: 'CrearRecurso',
+        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/MusicalResourceAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Recursos'
+        },
+      },
+      {
+        path: ':id',
+        name: 'VerRecurso',
+        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/MusicalResourceView.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'VistaRecurso'
+        },
+      },
+      {
+        path: ':id/editar',
+        name: 'EditarRecurso',
+        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/MusicalResourceAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'edicionRecurso'
+        },
+      },
+      
+    ]
+  },
+  {
     path: '/admin/users',
     name: 'Usuarios',
     component: () => import(/* webpackChunkName: "usermanagement" */ '../views/UserManagement.vue'),
+    redirect: { name: 'UserList' },
     meta: {
       requiresAuth: true,
       is_admin: true,
       link_name: 'Usuarios',
     },
+    children: [
+      {
+        path: '',
+        name: 'UserList',
+        component: () => import(/* webpackChunkName: "UserList" */ '../views/UserList.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Gestión de Usuarios'
+        },
+      },
+      {
+        path: 'add',
+        name: 'CrearUsuario',
+        component: () => import(/* webpackChunkName: "useradd" */ '../views/UserAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Crear Usuario',
+        },
+      },
+      {
+        path: 'edit/:id',
+        name: 'EditarUsuario',
+        component: () => import(/* webpackChunkName: "useradd" */ '../views/UserAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Editar Usuario'
+        }
+      }
+    ]
   },
+
 ];
 
 const router = new VueRouter({
@@ -71,7 +159,7 @@ router.beforeEach((to, from, next) => {
       const user = JSON.parse(localStorage.getItem('user'));
       console.log(user);
       if (to.matched.some((record) => record.meta.is_admin)) {
-        if (user.is_admin == 1) {
+        if (user.rolesUser.map(rol => rol.id).includes(1)) {
           next();
         } else {
           next({ name: 'Home' });

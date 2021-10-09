@@ -29,17 +29,8 @@ export default {
   },
   methods: {
     login() {
-      const request = axios.post('/api/login', {
-        username: this.username,
-        password: this.password,
-      });
-
-      request.then((resp) => {
-        window.localStorage.setItem('user', JSON.stringify({ is_admin: 1 }));
-        window.localStorage.setItem('jwt', resp.data.jwt);
-        this.$store.commit('setCurrentUser', { is_admin: 1 });
-        this.$router.replace({ name: 'Dashboard' });
-      });
+        const req = this.$store.dispatch('login', {username: this.username, password: this.password});
+        req.then(resp => {this.$router.replace({ name: 'Dashboard' })});
     },
   },
 

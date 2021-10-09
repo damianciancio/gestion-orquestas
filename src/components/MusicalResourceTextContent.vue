@@ -1,26 +1,42 @@
 <template>
-  <div class="container">
-    <textarea v-model="content" class="form-control" rows="15"></textarea>
-    <select class="form-control" v-model="currentInstrument">
-      <option v-for="inst in instruments" :value="inst" :key="inst.name">
-        {{ inst.name }}
-      </option>
-    </select>
-    <div id="diagrams" class="row">
-      <div v-for="chord in chords" class="col-md-2" :key="chord.symbol">
-        <div>{{ chord.symbol }}</div>
-        <chord
-          :setup="{
-            startAt: 1, // position to start the chord at
-            tuning: currentInstrument.stringConf, // tuning
-            strings: chord.preparedChord,
-          }"
-        />
+  <div>
+    <div class="row">
+      <div v-if="mode == 'edition'" class="col-md-8">
+        <label>Letra y acordes</label>
+        <textarea
+          class="form-control"
+          :value="value"
+          rows="15"
+          v-on:input="$emit('input', $event.target.value)"
+        ></textarea>
+      </div>
+      <div class="col-md-8 mt-4" id="show-content" v-else>
+        <pre>{{ value }}</pre>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control mt-4" v-model="currentInstrument">
+          <option v-for="inst in instruments" :value="inst" :key="inst.name">
+            {{ inst.name }}
+          </option>
+        </select>
+        <div class="mt-4">Acordes</div>
+        <div id="diagrams" class="row">
+          <div v-for="chord in chords" class="col-md-6" :key="chord.symbol">
+            <div>{{ chord.symbol }}</div>
+            <chord
+              :setup="{
+                startAt: 1, // position to start the chord at
+                tuning: currentInstrument.stringConf, // tuning
+                strings: chord.preparedChord,
+              }"
+            />
+          </div>
+        </div>
       </div>
     </div>
+    <div></div>
   </div>
 </template>
-
 <script>
 import { findGuitarChord } from "chord-fingering";
 import { Chords } from "momo-chords";
@@ -48,11 +64,12 @@ function constructFromPositionString(positionString) {
     }
   });
 }
-
 export default {
+  components: {
+    chord: VcChordDiagram,
+  },
   data() {
     return {
-      chords: [],
       instruments: [
         {
           name: "Guitarra",
@@ -64,29 +81,17 @@ export default {
         },
       ],
       currentInstrument: null,
-      content: `            Em          G
-Estaba el diablo mal parado
-          D          A
-en la esquina de mi barrio
-    Em             G
-ahí donde dobla el viento
-      D          A  Amaj7/G
-y se cruzan los atajos`,
+      chords: [],
     };
   },
-  name: "Home",
-
-  components: {
-    chord: VcChordDiagram,
-  },
+  props: ["value", "mode"],
   watch: {
-    content() {
+    value() {
       this.refreshChords();
     },
     currentInstrument() {
-      console.log(this.currentInstrument);
       this.refreshChords();
-    }
+    },
   },
   mounted() {
     this.currentInstrument = this.instruments[0];
@@ -96,7 +101,7 @@ y se cruzan los atajos`,
     refreshChords() {
       const chords = new Chords();
 
-      const words = this.content.replace(/\s+/g, " ").split(" ");
+      const words = this.value.replace(/\s+/g, " ").split(" ");
 
       const songChords = words.filter((word) => chords.isChord(word));
       const uniqueChords = songChords.filter(function (item, pos) {
@@ -116,16 +121,18 @@ y se cruzan los atajos`,
           };
         });
 
-      console.log(uniqueChords);
-      console.log(this.chords);
-      constructFromPositionString(this.chords[0].fingerings[0].positionString);
+      // console.log(uniqueChords);
+      // console.log(this.chords);
+      // constructFromPositionString(this.chords[0].fingerings[0].positionString);
       // console.log(chord.fingerings[0].positionString);
     },
   },
 };
 </script>
 <style scoped>
-textarea {
+textarea,
+#show-content {
   font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
 }
 </style>
