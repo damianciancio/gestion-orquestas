@@ -1,6 +1,6 @@
 <template>
   <div>
-          <v-dialog v-model="deleteDialog" max-width="290">
+    <v-dialog v-model="deleteDialog" max-width="290">
       <v-card v-if="resourceDeleting">
         <v-card-title class="text-h5">
           Eliminar recurso {{ resourceDeleting.name }}
@@ -27,9 +27,13 @@
     <div class="col-md-12">
       <div class="d-flex justify-content-between">
         <h2>Listado</h2>
-        <router-link :to="{ name: 'CrearRecurso' }" class="btn btn-primary"
-          ><Plus />Agregar</router-link
-        >
+        <DropdownButton
+          title="Agregar"
+          :items="musicalResourceTypes"
+          label="label"
+        ></DropdownButton>
+        <!--router-link :to="{ name: 'CrearRecurso' }" class="btn btn-primary"
+          ><Plus />Agregar</router-link-->
       </div>
     </div>
     <div class="col-md-12">
@@ -46,7 +50,13 @@
           >
             <ApplicationEdit />
           </router-link>
-          <button class="btn btn-danger btn-sm" v-on:click="resourceDeleting = item; deleteDialog = true">
+          <button
+            class="btn btn-danger btn-sm"
+            v-on:click="
+              resourceDeleting = item;
+              deleteDialog = true;
+            "
+          >
             <Delete />
           </button>
         </template>
@@ -59,11 +69,27 @@ import Plus from "vue-material-design-icons/Plus.vue";
 import Delete from "vue-material-design-icons/Delete.vue";
 import ApplicationEdit from "vue-material-design-icons/ApplicationEdit.vue";
 
+import DropdownButton from "@/components/UI/DropdownButton.vue";
+
 export default {
   data() {
     return {
-        deleteDialog: false,
-        resourceDeleting: null,
+      deleteDialog: false,
+      resourceDeleting: null,
+      musicalResourceTypes: [
+        {
+          id: "text",
+          label: "Texto",
+        },
+        {
+          id: "imagen",
+          label: "Imagen",
+        },
+        {
+          id: "video",
+          label: "Video",
+        },
+      ],
       tableheaders: [
         {
           text: "Nombre",
@@ -87,7 +113,7 @@ export default {
           text: "Acciones",
           align: "center",
           sortable: true,
-          value:"actions"
+          value: "actions",
         },
       ],
     };
@@ -95,7 +121,8 @@ export default {
   components: {
     Plus,
     Delete,
-    ApplicationEdit
+    ApplicationEdit,
+    DropdownButton
   },
   mounted() {
     this.fetchMusicalResouces();
@@ -104,10 +131,10 @@ export default {
     fetchMusicalResouces() {
       const req = this.$store.dispatch("fetchResources");
     },
-      confirmResourceDeletion() {
-          this.$store.dispatch('deleteResource', this.resourceDeleting.id);
-          this.deleteDialog = false;
-      }
+    confirmResourceDeletion() {
+      this.$store.dispatch("deleteResource", this.resourceDeleting.id);
+      this.deleteDialog = false;
+    },
   },
   computed: {
     musicalResources() {

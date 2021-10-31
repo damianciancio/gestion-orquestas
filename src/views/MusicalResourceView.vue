@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div v-if="!loading">
         <div class="d-flex justify-content-between">
             <span>{{ resource.song.title }}</span>
             <span class="bagde badge-primary">{{ resource.typeMusicalResource.name }}</span>
         </div>
-        <div v-if="true">
+        <div v-if="resource.typeMusicalResource.systemName == 'texto'">
             <musical-resource-text-content mode="view" :value="resource.content" />
         </div>
     </div>
@@ -15,14 +15,17 @@ export default {
   components: { MusicalResourceTextContent },
     data() {
         return {
-            resource: null
+            resource: null,
+            loading: false
         }
     },
     mounted() { 
+        this.loading = true;
         const request = this.$store.dispatch('getResource', this.$route.params.id);
         request.then((response) => {
             this.resource = response.data;
             this.$route.meta.link_name = response.data.name;
+            this.loading = false;
         });
     }
 }

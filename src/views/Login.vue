@@ -29,7 +29,9 @@ export default {
   },
   methods: {
     login() {
-        const req = this.$store.dispatch('login', {username: this.username, password: this.password});
+        const req = this.$store.dispatch('login', 
+          {username: this.username, password: this.password}
+        );
         req.then(resp => {this.$router.replace({ name: 'Dashboard' })});
     },
   },

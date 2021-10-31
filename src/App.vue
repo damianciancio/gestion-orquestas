@@ -27,6 +27,9 @@ export default {
     return {
     };
   },
+  created(){
+
+  },
   computed: {
     users() {
       return this.$store.getters.users;

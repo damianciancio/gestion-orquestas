@@ -8,7 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    
+
   },
   state: {
     resources: [],
@@ -65,9 +65,9 @@ export default new Vuex.Store({
       return request;
     },
     getResource(store, id) {
-      const request = axios.get(`/api/musical_resources/`, {params: {id: id}});
+      const request = axios.get(`/api/musical_resources/`, { params: { id: id } });
       return request;
-      
+
     },
     fetchSongs(store) {
       const request = axios.get('/api/songs');
@@ -104,29 +104,33 @@ export default new Vuex.Store({
         });
 
     },
-    login(store, { username, password }) {
-      const request = axios.post('/api/login', {
-        username: username,
-        password: password,
-      });
+    async login(store, { username, password }) {
+      
+      try {
 
-      request.then(async (resp) => {
+        const resp = await axios.post('/api/login', {
+          username: username,
+          password: password,
+        });
+        
         window.localStorage.setItem('jwt', resp.data.jwt);
-
+        
         const currentUser = await axios.get('/api/users', { params: { username: resp.data.username } });
-
+        
         window.localStorage.setItem('user', JSON.stringify(currentUser.data));
         store.commit('setCurrentUser', currentUser.data);
-      });
+        return resp;
+      } catch(error) {
+        
+      }
 
-      return request;
     },
     logout(store) {
       store.commit('setCurrentUser', null);
       window.localStorage.removeItem('user');
       window.localStorage.removeItem('jwt');
     },
-    addMusicalResource(store, musicalResource){
+    addMusicalResource(store, musicalResource) {
       const request = axios.post('/api/musical_resources', musicalResource);
     }
   },
@@ -146,7 +150,7 @@ export default new Vuex.Store({
     resources({ resources }) {
       return resources;
     },
-    musicalResourceTypes({musicalResourceTypes}) {
+    musicalResourceTypes({ musicalResourceTypes }) {
       return musicalResourceTypes;
     }
   },
