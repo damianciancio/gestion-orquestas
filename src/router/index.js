@@ -64,7 +64,7 @@ const routes = [
         },
       },
       {
-        path: '/add',
+        path: 'add/:type',
         name: 'CrearRecurso',
         component: () => import(/* webpackChunkName: "usermanagement" */ '../views/MusicalResourceAdd.vue'),
         meta: {

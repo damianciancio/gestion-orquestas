@@ -4,14 +4,17 @@ import router from './router';
 import store from './store';
 import axios from './helpers/axiosInterceptor';
 
+import { BootstrapVue } from 'bootstrap-vue';
+
 import 'jquery/src/jquery';
 import 'popper.js/dist/popper.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.esm';
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@/../node_modules/vc-chord-diagram/dist/lib/vc-chord-diagram.min.css';
 
 import TextInput from './components/UI/TextInput.vue';
 
+Vue.use(BootstrapVue);
 Vue.component('text-input', TextInput);
 
 import vuetify from './plugins/vuetify';

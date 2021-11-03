@@ -31,6 +31,7 @@
           title="Agregar"
           :items="musicalResourceTypes"
           label="label"
+          v-on:selected="selectedAddType($event)"
         ></DropdownButton>
         <!--router-link :to="{ name: 'CrearRecurso' }" class="btn btn-primary"
           ><Plus />Agregar</router-link-->
@@ -78,7 +79,7 @@ export default {
       resourceDeleting: null,
       musicalResourceTypes: [
         {
-          id: "text",
+          id: "texto",
           label: "Texto",
         },
         {
@@ -122,7 +123,7 @@ export default {
     Plus,
     Delete,
     ApplicationEdit,
-    DropdownButton
+    DropdownButton,
   },
   mounted() {
     this.fetchMusicalResouces();
@@ -134,6 +135,9 @@ export default {
     confirmResourceDeletion() {
       this.$store.dispatch("deleteResource", this.resourceDeleting.id);
       this.deleteDialog = false;
+    },
+    selectedAddType(type) {
+      this.$router.push({ name: "CrearRecurso", params: {type: type.id} });
     },
   },
   computed: {

@@ -1,25 +1,13 @@
 <template>
-  <div class="dropdown">
-    <button
-      class="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
+  <b-dropdown id="dropdown-1" :text="title" class="m-md-2">
+    <b-dropdown-item
+      class="dropdown-item"
+      v-for="item in items"
+      :key="item[label]"
+      v-on:click="clicked(item)"
+      >{{ item[label] }}</b-dropdown-item
     >
-      {{ title }}
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a
-        class="dropdown-item"
-        v-for="item in items"
-        :key="item[label]"
-        v-on:click="clicked(item)"
-        >{{ item[label] }}</a
-      >
-    </div>
-  </div>
+  </b-dropdown>
 </template>
 <script>
 export default {
@@ -39,7 +27,8 @@ export default {
   },
   methods: {
     clicked(item) {
-      this.$emit("clicked", item);
+        console.log(item);
+      this.$emit("selected", item);
     },
   },
 };

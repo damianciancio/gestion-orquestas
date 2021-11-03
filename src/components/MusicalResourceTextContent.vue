@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div v-if="mode == 'edition'" class="col-md-8">
+      <div v-if="editable" class="col-md-8">
         <label>Letra y acordes</label>
         <textarea
           class="form-control"
@@ -96,6 +96,12 @@ export default {
   mounted() {
     this.currentInstrument = this.instruments[0];
     this.refreshChords();
+  },
+
+  computed: {
+    editable() {
+      return ["add", "edit"].includes(this.mode);
+    },
   },
   methods: {
     refreshChords() {
