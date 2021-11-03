@@ -132,6 +132,10 @@ export default new Vuex.Store({
     },
     addMusicalResource(store, musicalResource) {
       const request = axios.post('/api/musical_resources', musicalResource);
+    },
+    addSong(store, song) {
+      const request = axios.post('/api/songs', song);
+      return request;
     }
   },
   getters: {

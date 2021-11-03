@@ -12,11 +12,19 @@
       </div>
       <div class="col-md-4">
         <label>Canción</label>
-        <select class="form-control" v-model="resource.song">
+        <select class="form-select" v-model="resource.song">
           <option :value="song" v-for="song in songs" :key="song.id">
             {{ song.title }}
           </option>
         </select>
+        <button class="btn btn-primary" v-on:click="openAddSongModal = true">
+          Agregar
+        </button>
+        <AddSongModal
+          :open="openAddSongModal"
+          v-on:confirm="addSong($event)"
+          v-on:close="openAddSongModal = false"
+        />
       </div>
       <!--div class="col-md-4">
         <label>Tipo</label>
@@ -31,7 +39,7 @@
         </select>
       </div-->
       <div class="row mt-4">
-        {{resource.typeMusicalResource}}
+        {{ resource.typeMusicalResource }}
         <MusicalResourceTextContent
           v-if="resource.typeMusicalResource.systemName == 'texto'"
           :mode="mode"
@@ -57,13 +65,15 @@ import MusicalResourceTextContent from "@/components/MusicalResourceTextContent"
 import MusicalResourceImageContent from "@/components/MusicalResourceImageContent";
 import MusicalResourceVideoContent from "@/components/MusicalResourceVideoContent";
 import TextInput from "@/components/UI/TextInput";
+import AddSongModal from "@/components/Modals/AddSongModal";
 
 export default {
   components: {
     TextInput,
     MusicalResourceTextContent,
     MusicalResourceImageContent,
-    MusicalResourceVideoContent
+    MusicalResourceVideoContent,
+    AddSongModal,
   },
   data() {
     return {
@@ -75,6 +85,7 @@ export default {
         content: "",
       },
       mode: "add",
+      openAddSongModal: false,
     };
   },
   mounted() {
@@ -118,6 +129,15 @@ export default {
     },
     validate() {
       return true;
+    },
+    addSong(song) {
+      const request = this.$store.dispatch("addSong", song);
+      request.then((response) => {
+        this.$store.dispatch("fetchSongs").then(() => {
+          this.resource.song = response.data;
+          this.openAddSongModal = false;
+        });
+      })
     },
   },
 };
