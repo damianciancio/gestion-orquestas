@@ -1,0 +1,81 @@
+<template>
+    <div>
+        <h1>
+            {{ user.username }}
+        </h1>
+        <div class="d-flex space-between">
+            <div class="card user-general-info">
+                <div class="card-body">
+                    <h5>
+                        {{ user.email }}
+                    </h5>
+                    <h5>
+                        {{ user.name }}
+                        {{ user.lastname }}
+                    </h5>
+                    <h5>{{ user.address }}</h5>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body" v-if="isAdminUserLoggedIn">
+                    <h5>Roles</h5>
+                    <ul class="list-group">
+                        <li
+                            class="list-group-item"
+                            v-for="role in user.rolesUser"
+                            :key="role.id"
+                        >
+                            {{ role.name }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import axios from "@/helpers/axiosInterceptor";
+import isAdmin from "@/helpers/isAdmin.js";
+
+export default {
+    async mounted() {
+        const user_id = this.$route.params.id;
+
+        if (this.currentUser.id != user_id && !isAdminUserLoggedIn()) {
+            this.$router.replace({ name: "Home" });
+        }
+        this.loading = true;
+        try {
+            this.user = (
+                await axios.get("/api/users/", { params: { id: user_id } })
+            ).data;
+            this.$route.meta.title = this.user.username;
+        } catch (error) {
+        } finally {
+            this.loading = false;
+        }
+    },
+    data() {
+        return {
+            user: null,
+        };
+    },
+    computed: {
+        currentUser() {
+            return this.$store.getters.currentUser;
+        },
+        isAdminUserLoggedIn() {
+            return isAdmin(this.currentUser.rolesUser);
+        },
+    },
+};
+</script>
+<style lang="scss" scoped>
+.user-general-info, .roles {
+    flex-grow: 1;
+    margin: 5px;
+}
+.d-flex {
+    padding: 5px;
+}
+</style>

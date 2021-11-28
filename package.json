@@ -16,6 +16,7 @@
     "chord-fingering": "^1.0.1",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
+    "moment": "^2.29.1",
     "momo-chords": "^0.4.3",
     "popper.js": "^1.16.1",
     "vc-chord-diagram": "0.0.3",

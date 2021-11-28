@@ -87,7 +87,6 @@ export default new Vuex.Store({
       const request = axios.delete(`/api/users/`, { params: { id: user_id } });
       request
         .then((resp) => {
-          store.commit('deletedUser', user_id);
         })
         .catch((err) => {
           console.log(err);
@@ -104,6 +103,14 @@ export default new Vuex.Store({
         });
 
     },
+    deleteNew(store, id) {
+      const request = axios.delete(`/api/news/`, { params: { id: id } });
+      request
+        .catch((err) => {
+          console.log(err);
+        });
+
+    },
     async login(store, { username, password }) {
       
       try {
@@ -113,12 +120,17 @@ export default new Vuex.Store({
           password: password,
         });
         
-        window.localStorage.setItem('jwt', resp.data.jwt);
+        const data = resp.data.data;
+        // const data = resp.data;
+
+        console.log(data);
+
+        window.localStorage.setItem('jwt', data.jwt);
         
-        const currentUser = await axios.get('/api/users', { params: { username: resp.data.username } });
+        const currentUser = await axios.get('/api/users', { params: { username: data.username } });
         
-        window.localStorage.setItem('user', JSON.stringify(currentUser.data));
-        store.commit('setCurrentUser', currentUser.data);
+        window.localStorage.setItem('user', JSON.stringify(currentUser.data.data));
+        store.commit('setCurrentUser', currentUser.data.data);
         return resp;
       } catch(error) {
         

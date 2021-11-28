@@ -24,6 +24,14 @@ const routes = [
     },
   },
   {
+    path: '/user/:id',
+    name: 'UserProfile',
+    component: () => import('../views/UserProfile.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/',
     name: 'Home',
     component: Home,
@@ -93,7 +101,6 @@ const routes = [
           link_name: 'edicionRecurso'
         },
       },
-      
     ]
   },
   {
@@ -139,6 +146,49 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/admin/news',
+    name: 'NewsManagement',
+    component: () => import('../views/news/NewsManagement'),
+    meta: {
+      requiresAuth: true,
+      is_admin: true,
+      link_name: 'Noticias'
+    },
+    redirect: {name: 'NewsList'},
+    children: [
+      {
+        path: '',
+        name: 'NewsList',
+        component: () => import('../views/news/NewsList'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Noticias'
+        }
+      },
+      {
+        path: 'add',
+        name: 'CrearNoticia',
+        component: () => import(/* webpackChunkName: "useradd" */ '../views/news/NewAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Crear Noticia',
+        },
+      },
+      {
+        path: 'edit/:id',
+        name: 'EditarNoticia',
+        component: () => import(/* webpackChunkName: "useradd" */ '../views/news/NewAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Editar Noticia'
+        }
+      }
+    ]
+  }
 
 ];
 
