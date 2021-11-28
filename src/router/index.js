@@ -188,6 +188,49 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/admin/shows',
+    name: 'ShowsManagement',
+    component: () => import('../views/shows/ShowsManagement'),
+    meta: {
+      requiresAuth: true,
+      is_admin: true,
+      link_name: 'Shows'
+    },
+    redirect: {name: 'ShowsList'},
+    children: [
+      {
+        path: '',
+        name: 'ShowsList',
+        component: () => import('../views/shows/ShowsList'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Shows'
+        }
+      },
+      {
+        path: 'add',
+        name: 'CrearShow',
+        component: () => import(/* webpackChunkName: "useradd" */ '../views/shows/ShowAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Crear show',
+        },
+      },
+      {
+        path: 'edit/:id',
+        name: 'EditarShow',
+        component: () => import(/* webpackChunkName: "useradd" */ '../views/shows/ShowAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'Editar Show'
+        }
+      }
+    ]
   }
 
 ];
