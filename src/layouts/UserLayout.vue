@@ -4,5 +4,7 @@
     </div>
 </template>
 <style lang="scss">
-
+#user-layout {
+    height: 100%;
+}
 </style>

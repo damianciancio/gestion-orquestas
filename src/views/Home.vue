@@ -1,131 +1,86 @@
 <template>
-  <div class="container">
-    <textarea v-model="content" class="form-control" rows="15"></textarea>
-    <select class="form-control" v-model="currentInstrument">
-      <option v-for="inst in instruments" :value="inst" :key="inst.name">
-        {{ inst.name }}
-      </option>
-    </select>
-    <div id="diagrams" class="row">
-      <div v-for="chord in chords" class="col-md-2" :key="chord.symbol">
-        <div>{{ chord.symbol }}</div>
-        <chord
-          :setup="{
-            startAt: 1, // position to start the chord at
-            tuning: currentInstrument.stringConf, // tuning
-            strings: chord.preparedChord,
-          }"
-        />
-      </div>
+    <div class="main-container">
+        <header>HEADER</header>
+        <b-navbar toggleable="lg">
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+            <b-collapse id="nav-collapse" is-nav>
+                <b-navbar-nav>
+                    <b-nav-item href="#">Link</b-nav-item>
+                </b-navbar-nav>
+                <b-navbar-nav class="ml-auto">
+                    <b-nav-item href="#">asd</b-nav-item>
+                </b-navbar-nav>
+            </b-collapse>
+        </b-navbar>
+        <main>
+            <aside>
+				<div>
+					<heading>
+						Próximos shows!
+					</heading>
+					<ul>
+						<li>Mar del plata, 5/12/2021</li>
+					</ul>
+				</div>
+			</aside>
+            <section>
+				<article>
+					<heading>
+						<h1>Charagua</h1>
+						<h2>Suena la orilla</h2>
+					</heading>
+				</article>
+			</section>
+        </main>
+        <footer>Charagua, suena la orilla </footer>
     </div>
-  </div>
 </template>
-
-<script>
-import { findGuitarChord } from "chord-fingering";
-import { Chords } from "momo-chords";
-
-// import the module
-import VcChordDiagram from "vc-chord-diagram";
-// import the stylesheet
-
-function constructFromPositionString(positionString) {
-  let arrayOfPositions = positionString.split("-");
-  if (arrayOfPositions.length == 1) {
-    arrayOfPositions = positionString.split("");
-  }
-
-  return arrayOfPositions.map((pos, index) => {
-    if (pos === "x") {
-      return {
-        fret: 0,
-        finger: "x",
-      };
-    } else {
-      return {
-        fret: parseInt(pos),
-      };
-    }
-  });
+<style language="scss" scoped>
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+header {
+    min-height: 100px;
+    padding: 20px;
+    background-color: black;
+    color: white;
+}
+nav {
+    min-height: 75px;
+    border-top: 4px solid #0e4749;
+    color: #0e4749;
 }
 
-export default {
-  data() {
-    return {
-      chords: [],
-      instruments: [
-        {
-          name: "Guitarra",
-          stringConf: ["E", "A", "D", "G", "B", "E"],
-        },
-        {
-          name: "Charango",
-          stringConf: ["G", "C", "E", "A", "E"],
-        },
-      ],
-      currentInstrument: null,
-      content: `            Em          G
-Estaba el diablo mal parado
-          D          A
-en la esquina de mi barrio
-    Em             G
-ahí donde dobla el viento
-      D          A  Amaj7/G
-y se cruzan los atajos`,
-    };
-  },
-  name: "Home",
+aside {
+    flex: 1;
+    padding: 20px;
+}
 
-  components: {
-    chord: VcChordDiagram,
-  },
-  watch: {
-    content() {
-      this.refreshChords();
-    },
-    currentInstrument() {
-      console.log(this.currentInstrument);
-      this.refreshChords();
-    }
-  },
-  mounted() {
-    this.currentInstrument = this.instruments[0];
-    this.refreshChords();
-  },
-  methods: {
-    refreshChords() {
-      const chords = new Chords();
+main {
+	display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    width: 100%;
+}
 
-      const words = this.content.replace(/\s+/g, " ").split(" ");
+section {
+    height: 100%;
+    flex: 5;
+    padding: 20px;
+}
 
-      const songChords = words.filter((word) => chords.isChord(word));
-      const uniqueChords = songChords.filter(function (item, pos) {
-        return songChords.indexOf(item) == pos;
-      });
-
-      this.chords = uniqueChords
-        .map((chord) => {
-          return findGuitarChord(chord, this.currentInstrument.stringConf);
-        })
-        .map((chord) => {
-          return {
-            ...chord,
-            preparedChord: constructFromPositionString(
-              chord.fingerings[0].positionString
-            ),
-          };
-        });
-
-      console.log(uniqueChords);
-      console.log(this.chords);
-      constructFromPositionString(this.chords[0].fingerings[0].positionString);
-      // console.log(chord.fingerings[0].positionString);
-    },
-  },
-};
-</script>
-<style scoped>
-textarea {
-  font-family: "Courier New", Courier, monospace;
+footer {
+    color: white;
+    background-color: black;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+@media screen and (max-width: 992px) {
+	main {
+		display: inline-block;
+	}
 }
 </style>
