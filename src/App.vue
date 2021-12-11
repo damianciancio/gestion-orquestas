@@ -38,6 +38,11 @@ export default {
       return this.$store.getters.currentUserIsAdmin;
     },
     currentLayout() {
+
+      if (this.$route.meta.hasOwnProperty('layout')) {
+        return this.$route.meta.layout;
+      }
+
       if (this.$route.name == 'Login' || this.$route.name == 'Register') {
         return 'login';
       }

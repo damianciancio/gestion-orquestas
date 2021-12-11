@@ -131,6 +131,7 @@ export default {
   methods: {
     fetchMusicalResouces() {
       const req = this.$store.dispatch("fetchResources");
+      req.then(r => console.log(r.data))
     },
     confirmResourceDeletion() {
       this.$store.dispatch("deleteResource", this.resourceDeleting.id);

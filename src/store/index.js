@@ -120,7 +120,7 @@ export default new Vuex.Store({
           password: password,
         });
         
-        const data = resp.data.data;
+        const data = resp.data;
         // const data = resp.data;
 
         console.log(data);
@@ -129,8 +129,8 @@ export default new Vuex.Store({
         
         const currentUser = await axios.get('/api/users', { params: { username: data.username } });
         
-        window.localStorage.setItem('user', JSON.stringify(currentUser.data.data));
-        store.commit('setCurrentUser', currentUser.data.data);
+        window.localStorage.setItem('user', JSON.stringify(currentUser.data));
+        store.commit('setCurrentUser', currentUser.data);
         return resp;
       } catch(error) {
         

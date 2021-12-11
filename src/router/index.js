@@ -15,6 +15,14 @@ const routes = [
     },
   },
   {
+    path: '/new/:id',
+    name: 'NewView',
+    component: () => import( /* webpackChunkName: "register" */ '../views/news/NewView.vue'),
+    meta: {
+      guest: true,
+    },
+  },
+  {
     path: '/user/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
@@ -38,6 +46,7 @@ const routes = [
     meta: {
       requiresAuth: false,
       link_name: 'Home',
+      layout: 'user'
     },
   },
   {
