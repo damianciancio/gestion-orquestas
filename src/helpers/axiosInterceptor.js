@@ -17,6 +17,7 @@ axios.interceptors.response.use((response) =>
   // Do something with response data
   Promise.resolve(response.data),
   (error) => {
+    console.log(error)
     if (error.response.status == 403) {
       window.localStorage.removeItem('jwt');
       window.localStorage.removeItem('user');

@@ -22,3 +22,15 @@ export default {
     props: ["aNew"],
 };
 </script>
+<style lang="scss" scoped>
+    .card-text {
+        height: 92px;
+        text-overflow: ellipsis;
+        overflow:hidden;
+        // Addition lines for 2 line or multiline ellipsis
+        display: -webkit-box !important;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+    }
+</style>

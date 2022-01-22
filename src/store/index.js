@@ -168,6 +168,9 @@ export default new Vuex.Store({
     },
     musicalResourceTypes({ musicalResourceTypes }) {
       return musicalResourceTypes;
+    },
+    isLoggedIn({currentUser}) {
+      return currentUser !== null;
     }
   },
   modules: {

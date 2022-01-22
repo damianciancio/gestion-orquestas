@@ -26,20 +26,7 @@
           v-on:close="openAddSongModal = false"
         />
       </div>
-      <!--div class="col-md-4">
-        <label>Tipo</label>
-        <select class="form-control" v-model="resource.typeMusicalResource">
-          <option
-            :value="type"
-            v-for="type in musicalResourceTypes"
-            :key="type.id"
-          >
-            {{ type.name }}
-          </option>
-        </select>
-      </div-->
       <div class="row mt-4">
-        {{ resource.typeMusicalResource }}
         <MusicalResourceTextContent
           v-if="resource.typeMusicalResource.systemName == 'texto'"
           :mode="mode"

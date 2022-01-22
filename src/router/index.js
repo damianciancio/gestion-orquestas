@@ -40,6 +40,26 @@ const routes = [
     }
   },
   {
+    path: '/shows/:id',
+    name: 'ShowView',
+    component: () => import('../views/shows/Show.vue'),
+    meta: {
+      requiresAuth: false,
+      link_name: 'ShowView',
+      layout: 'user'
+    },
+  },
+  {
+    path: '/shows/:id/buy',
+    name: 'BuyTickets',
+    component: () => import('../views/shows/BuyTickets.vue'),
+    meta: {
+      requiresAuth: true,
+      link_name: 'BuyTickets',
+      layout: 'user'
+    },
+  },
+  {
     path: '/',
     name: 'Home',
     component: Home,
@@ -245,38 +265,52 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });
 
 router.beforeEach((to, from, next) => {
+  console.log("to", to)
+  console.log("from", from)
+  console.log("from", from)
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+    console.log("1")
     if (localStorage.getItem('jwt') == null) {
+      console.log("2")
       next({
-        path: '/user/login',
+        name: 'Login',
         params: { nextUrl: to.fullPath },
       });
     } else {
+      console.log("3")
       const user = JSON.parse(localStorage.getItem('user'));
       console.log(user);
       if (to.matched.some((record) => record.meta.is_admin)) {
+        console.log("4")
         if (user.rolesUser.map(rol => rol.id).includes(1)) {
+          console.log("5")
           next();
         } else {
+          console.log("6")
           next({ name: 'Home' });
         }
       } else {
+        console.log("7")
         next();
       }
     }
   } else if (to.matched.some((record) => record.meta.guest)) {
+    console.log("8")
     if (localStorage.getItem('jwt') == null) {
+      console.log("9")
       next();
     } else {
+      console.log("10")
       next({ name: 'Home' });
     }
   } else {
+    console.log("10")
     next();
   }
 });
