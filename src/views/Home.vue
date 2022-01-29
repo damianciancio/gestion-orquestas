@@ -108,7 +108,6 @@ export default {
 @media (max-width: 902px) {
     #news-container {
         grid-template-columns: repeat(2, 1fr);
-
     }
 }
 @media(max-width: 768px) {

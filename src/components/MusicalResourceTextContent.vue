@@ -22,10 +22,10 @@
         <div class="mt-4">Acordes</div>
         <div id="diagrams" class="row">
           <div v-for="chord in chords" class="col-md-6" :key="chord.symbol">
-            <div>{{ chord.symbol }}</div>
+            <div>{{ chord.symbol }} {{ chord.description }}</div>
             <chord
               :setup="{
-                startAt: 1, // position to start the chord at
+                startAt: chord.startsAt, // position to start the chord at
                 tuning: currentInstrument.stringConf, // tuning
                 strings: chord.preparedChord,
               }"
@@ -104,6 +104,13 @@ export default {
     },
   },
   methods: {
+    getStartsAt(preparedChord) {
+      console.log(preparedChord.map(p => p.fret))
+      const frets = preparedChord.map(p => p.fret);
+      const min = Math.min(...frets);
+
+      return (min == 0 ? 1 : min);
+    },
     refreshChords() {
       const chords = new Chords();
 
@@ -119,16 +126,39 @@ export default {
           return findGuitarChord(chord, this.currentInstrument.stringConf);
         })
         .map((chord) => {
+          console.log(chord.fingerings);
           return {
             ...chord,
             preparedChord: constructFromPositionString(
               chord.fingerings[0].positionString
             ),
           };
+        })
+        .map((chord) => {
+          console.log("first prepared!", chord.preparedChord.map(c => c.fret));
+          const min = Math.min(...(chord.preparedChord.filter(p => p.finger !== 'x').map(p => { return p.fret})));
+          console.log(min);
+          return {
+            ...chord,
+            startsAt: (min == 0 ? 1 : min)
+          }
+        })
+        .map(chord => {
+          if (chord.startsAt !== 1) {
+            console.log("PREPARED", chord.preparedChord)
+            chord.preparedChord = chord.preparedChord.map(prep => {
+              if (prep.fret !== 0 && prep.finger !== 'x') {
+                return {fret: prep.fret - chord.startsAt + 1, finger: prep.finger};
+              } else {
+                return {fret: prep.fret, finger: prep.finger};
+              }
+            });
+          }
+          console.log(chord)
+          return chord;
         });
-
       // console.log(uniqueChords);
-      // console.log(this.chords);
+      console.log(this.chords);
       // constructFromPositionString(this.chords[0].fingerings[0].positionString);
       // console.log(chord.fingerings[0].positionString);
     },

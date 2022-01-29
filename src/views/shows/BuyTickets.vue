@@ -11,7 +11,7 @@
         </div>
         <button class="btn btn-primary" v-if="!mpResponse" v-on:click="buyTickets">Confirmar</button>
         <!--template>{{ mpResponse }}</template-->
-        <div id="button-checkout"></div>
+        <div id="button-checkout"></div> 
     </div>
 </template>
 <script>

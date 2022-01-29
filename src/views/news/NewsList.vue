@@ -18,6 +18,9 @@
             <template v-slot:item.publicDate="{ item }">
                 {{ item.publicDate | formatDate }}
             </template>
+            <template v-slot:item.enabled="{ item }">
+                {{ item.enabled ? 'Sí': 'No' }}
+            </template>
             <template v-slot:item.actions="{ item }">
                 <router-link
                     class="btn btn-primary btn-sm"

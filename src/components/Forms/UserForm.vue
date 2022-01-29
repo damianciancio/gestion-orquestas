@@ -31,6 +31,7 @@
         type="password"
       />
     </div>
+    <div>Las contraseñas deben tener como mínimo 8 caracteres</div>
     <div class="mb-3 col-md-6 col-xs-12">
       <label>Nombre</label>
       <text-input

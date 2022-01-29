@@ -37,8 +37,8 @@
             />
         </div>
         <div class="mb-3 col-md-6 col-xs-12">
-            <input type="checkbox" v-model="aNew.enabled" />
-            <label>Habilitado</label>
+            <input type="checkbox" id="enabled" v-model="aNew.enabled" /> 
+            <label for="enabled">Habilitado</label>
         </div>
         <div class="mb-3 col-md-12 col-xs-12">
             <button class="btn btn-primary" type="button" v-on:click="submit">
@@ -108,8 +108,7 @@ export default {
         const usersRequest = axios.get("/api/users");
 
         usersRequest.then((resp) => {
-            console.log(resp.data.data)
-            this.users = resp.data.data;
+            this.users = resp.data;
         });
     },
     methods: {

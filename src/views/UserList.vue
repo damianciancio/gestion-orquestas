@@ -137,7 +137,7 @@ export default {
             this.deleteDialog = true;
         },
         confirmUserDeletion() {
-            this.store.dispatch("deleteUser", this.userDeleting.id);
+            this.$store.dispatch("deleteUser", this.userDeleting.id);
             this.deleteDialog = false;
         },
     },
