@@ -137,7 +137,6 @@ export default {
         .map((chord) => {
           console.log("first prepared!", chord.preparedChord.map(c => c.fret));
           const min = Math.min(...(chord.preparedChord.filter(p => p.finger !== 'x').map(p => { return p.fret})));
-          console.log(min);
           return {
             ...chord,
             startsAt: (min == 0 ? 1 : min)

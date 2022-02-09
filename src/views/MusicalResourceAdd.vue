@@ -5,28 +5,24 @@
         <button class="btn btn-primary" v-on:click="save">Guardar</button>
       </div>
     </div>
-    <div class="row">
+    <div v-if="view != 'addingSong'" class="row">
       <div class="col-md-4">
         <label>Nombre</label>
         <text-input v-model="resource.name"></text-input>
       </div>
       <div class="col-md-4">
         <label>Canción</label>
-        <select class="form-select" v-model="resource.song">
-          <option :value="song" v-for="song in songs" :key="song.id">
-            {{ song.title }}
-          </option>
-        </select>
-        <button class="btn btn-primary" v-on:click="openAddSongModal = true">
-          Agregar
-        </button>
-        <AddSongModal
-          :open="openAddSongModal"
-          v-on:confirm="addSong($event)"
-          v-on:close="openAddSongModal = false"
-        />
+        <multiselect 
+          :options="songs" 
+          label="title" 
+          v-model="resource.song"
+          :taggable="true"
+          v-on:tag="addSongView"
+          placeholder="Buscar o crear canción..."
+          select-label="Enter para seleccionar"
+        ></multiselect>
       </div>
-      <div class="row mt-4">
+      <div  class="row mt-4">
         <MusicalResourceTextContent
           v-if="resource.typeMusicalResource.systemName == 'texto'"
           :mode="mode"
@@ -45,6 +41,11 @@
         ></MusicalResourceVideoContent>
       </div>
     </div>
+      <div v-else>
+        <h1>Agregar canción</h1>
+        <song-form v-on:submit="addSong($event)" :edit-song="proposedSong">
+        </song-form>
+      </div>
   </div>
 </template>
 <script>
@@ -53,6 +54,7 @@ import MusicalResourceImageContent from "@/components/MusicalResourceImageConten
 import MusicalResourceVideoContent from "@/components/MusicalResourceVideoContent";
 import TextInput from "@/components/UI/TextInput";
 import AddSongModal from "@/components/Modals/AddSongModal";
+import SongForm from '../components/Forms/SongForm.vue';
 
 export default {
   components: {
@@ -61,6 +63,7 @@ export default {
     MusicalResourceImageContent,
     MusicalResourceVideoContent,
     AddSongModal,
+    SongForm,
   },
   data() {
     return {
@@ -72,7 +75,9 @@ export default {
         content: "",
       },
       mode: "add",
+      view: 'normal',
       openAddSongModal: false,
+      proposedSong: {},
     };
   },
   mounted() {
@@ -124,8 +129,12 @@ export default {
           this.resource.song = response.data;
           this.openAddSongModal = false;
         });
-      })
+      }).finally(() => this.view = 'normal');
     },
+    addSongView(songName) {
+      this.view = 'addingSong';
+      this.proposedSong.title = songName;
+    }
   },
 };
 </script>

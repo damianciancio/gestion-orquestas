@@ -12,13 +12,15 @@ import 'bootstrap/dist/js/bootstrap.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@/../node_modules/vc-chord-diagram/dist/lib/vc-chord-diagram.min.css';
-
+import 'vue-multiselect/dist/vue-multiselect.min.css';
+import Multiselect from 'vue-multiselect';
 import formatMixin from './mixins/FormatMixin';
 
 import TextInput from './components/UI/TextInput.vue';
 
 Vue.use(BootstrapVue);
 Vue.component('text-input', TextInput);
+Vue.component('multiselect', Multiselect);
 
 import VueCarousel from 'vue-carousel';
 Vue.use(VueCarousel);
