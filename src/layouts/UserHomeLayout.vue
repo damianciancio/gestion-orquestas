@@ -27,9 +27,7 @@
             </b-collapse>
         </b-navbar>
         <main>
-            <div class="container">
-                <slot></slot>
-            </div>
+            <slot></slot>
         </main>
         <footer>Charagua, suena la orilla</footer>
     </div>
@@ -56,14 +54,6 @@ export default {
     }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../assets/scss/user-styles.scss';
-
-@media screen and (min-width: 1200px) {
-    .gestion-container {
-        width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
 </style>

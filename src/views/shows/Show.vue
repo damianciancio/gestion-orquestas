@@ -1,5 +1,5 @@
 <template>
-    <div class="container" v-if="!loading">
+    <div v-if="!loading">
         <div id="button-checkout"></div>
         <h1>{{ show.name }}</h1>
         <h4>
@@ -8,6 +8,7 @@
         <h4>
             <Pin></Pin>{{ show.place }}
         </h4>
+        <h5> {{ show.price | money }} </h5>
         <router-link class="btn btn-primary" :to="{name: 'BuyTickets', params: { id: show.id } }">Comprar con Mercado Pago</router-link>
     </div>
 </template>
@@ -37,5 +38,10 @@ export default {
             this.loading = false;
         });
     },
+    filters: {
+        money(number) {
+            return '$' + number;
+        }
+    }
 };
 </script>

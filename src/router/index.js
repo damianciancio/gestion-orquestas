@@ -6,6 +6,25 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: '/payment/:id/buy/failed',
+    name: 'PagoFallido',
+    component: () => import(/* webpackChunkName: "FailedPayment" */ '../views/shows/FailedPayment.vue'),
+    meta: {
+      requiresAuth: true,
+      layout: 'user'
+    }
+  }, 
+  {
+    path: '/payment/:id/buy/success',
+    name: 'PagoAprobado',
+    component: () => import(/* webpackChunkName: "register" */ '../views/shows/SuccessfullPayment.vue'),
+    meta: {
+      requiresAuth: true,
+      link_name: 'PaymentSuccessfull',
+      layout: 'user'
+    }
+  },
+  {
     path: '/user/register',
     name: 'Register',
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
@@ -66,7 +85,7 @@ const routes = [
     meta: {
       requiresAuth: false,
       link_name: 'Home',
-      layout: 'user'
+      layout: 'user-home'
     },
   },
   {
@@ -260,8 +279,7 @@ const routes = [
         }
       }
     ]
-  }
-
+  },
 ];
 
 const router = new VueRouter({

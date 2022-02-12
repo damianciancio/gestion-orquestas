@@ -9,11 +9,15 @@
     <registration-layout v-if="currentLayout == 'login'">
       <router-view />
     </registration-layout>
+    <user-home-layout v-if="currentLayout == 'user-home'">
+      <router-view />
+    </user-home-layout>
   </div>
 </template>
 <script>
 import AdminLayout from './layouts/AdminLayout.vue';
 import UserLayout from './layouts/UserLayout.vue';
+import UserHomeLayout from './layouts/UserHomeLayout.vue';
 import RegistrationLayout from './layouts/RegistrationLayout.vue';
 
 
@@ -22,6 +26,7 @@ export default {
     'admin-layout': AdminLayout,
     'user-layout': UserLayout,
     'registration-layout': RegistrationLayout,
+    UserHomeLayout,
   },
   data() {
     return {

@@ -4,14 +4,21 @@
             <h1>{{ show.name }}</h1>
             <h4><Calendar></Calendar> {{ show.date | datetime }}</h4>
             <h4><Pin></Pin>{{ show.place }}</h4>
+            <h4><Pin></Pin>{{ show.price | money }}</h4>
         </div>
         <div>
             <label>Cantidad</label>
             <input class="form-control" type="number" v-model="quantity" />
         </div>
-        <button class="btn btn-primary" v-if="!mpResponse" v-on:click="buyTickets">Confirmar</button>
+        <button
+            class="btn btn-primary"
+            v-if="!mpResponse"
+            v-on:click="buyTickets"
+        >
+            Confirmar
+        </button>
         <!--template>{{ mpResponse }}</template-->
-        <div id="button-checkout"></div> 
+        <div id="button-checkout"></div>
     </div>
 </template>
 <script>
@@ -29,6 +36,11 @@ export default {
     computed: {
         currentUser() {
             return this.$store.getters.currentUser;
+        },
+    },
+    filters: {
+        money(number) {
+            return "$" + number;
         },
     },
     mounted() {
