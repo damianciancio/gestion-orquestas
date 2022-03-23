@@ -2,6 +2,8 @@
   <div>
     <router-link :to="{ name: 'UserProfile', params: { id: currentUser.id} }">Mi cuenta</router-link>
     |
+    <router-link :to="{ name: 'MyTickets' }">Mis Entradas</router-link>
+    |
     <button class="btn btn-link" v-on:click="logout">Cerrar sesión</button>
   </div>
 </template>

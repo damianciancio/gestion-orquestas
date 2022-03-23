@@ -17,6 +17,8 @@ import Multiselect from 'vue-multiselect';
 import formatMixin from './mixins/FormatMixin';
 
 import TextInput from './components/UI/TextInput.vue';
+import VueQRCodeComponent from 'vue-qrcode-component'
+Vue.component('qr-code', VueQRCodeComponent)
 
 Vue.use(BootstrapVue);
 Vue.component('text-input', TextInput);

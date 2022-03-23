@@ -79,6 +79,16 @@ const routes = [
     },
   },
   {
+    path: '/tickets',
+    name: 'MyTickets',
+    component: () => import('../views/shows/UserShows'),
+    meta: {
+      requiresAuth: true,
+      link_name: 'MyTickets',
+      layout: 'user',
+    }
+  },
+  {
     path: '/',
     name: 'Home',
     component: Home,
@@ -236,6 +246,16 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/admin/shows/scan',
+    name: 'ScanShows',
+    component: () => import('../views/shows/Scan'),
+    meta: {
+      requiresAuth: true,
+      is_admin: true,
+      link_name: 'Escanear entradas',
+    }
   },
   {
     path: '/admin/shows',
