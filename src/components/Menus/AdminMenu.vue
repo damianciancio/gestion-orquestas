@@ -7,7 +7,7 @@
             <div class="px-3 py-2">
                 <ul
                     class="
-                        flex-md-column flex-row
+                        flex-column
                         navbar-nav
                         w-100
                         justify-content-between

@@ -3,9 +3,9 @@
         <div>Próximos shows!</div>
         <ul>
             <li v-for="show in nextShows" :key="show.id">
-                <router-link :to="{ name: 'ShowView', params: { id: show.id } }">
-                    {{ show.name }}, {{ show.place }} -
-                    {{ show.date | date('DD/MM/YYYY HH:mm') }}
+                <router-link class="show-link" :to="{ name: 'ShowView', params: { id: show.id } }">
+                    {{ show.place }} -
+                    {{ show.date | date('DD/MM') }}
                 </router-link>
             </li>
         </ul>
@@ -21,3 +21,11 @@ export default {
     }
 }
 </script>
+<style scoped>
+.show-link {
+    font-weight: 900;
+}
+li {
+    list-style: none;
+}
+</style>

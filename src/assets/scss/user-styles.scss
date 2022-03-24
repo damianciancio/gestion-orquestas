@@ -37,7 +37,7 @@ $fontColor: #ffffff;
     }
 
     a {
-        font-weight: $lightWeight;
+        font-weight: $boldWeight;
         color: $primaryColor !important;
 
         &.nav-link {
@@ -111,6 +111,8 @@ $fontColor: #ffffff;
     .social-icons {
         display: flex;
         justify-content: space-between;
-        width: 100px;
+    }
+    .internal-container {
+        margin-top: 40px;
     }
 }

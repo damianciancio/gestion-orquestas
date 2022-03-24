@@ -40,4 +40,12 @@ export default {
     padding: 30px 80px;
     border-bottom: 1px solid var(--light);
 }
+
+@media (max-width: 500px)  {
+    #admin-layout nav {
+        background-color: 'red';    
+    }
+}
+
+
 </style>

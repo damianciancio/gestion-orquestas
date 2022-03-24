@@ -4,25 +4,21 @@
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse-alt" is-nav>
                 <b-navbar-nav class="d-flex align-items-center">
-                    <b-nav-item
-                        ><img height="40px" src="../assets/logo.png"
-                    /></b-nav-item>
-                    <b-nav-item
-                        ><router-link :to="{ name: 'Home' }"
-                            >Home</router-link
-                        ></b-nav-item
-                    >
+                    <b-nav-item>
+                        <img height="40px" src="../assets/logo.png"/>
+                    </b-nav-item>
+                    <b-nav-item>
+                        <router-link :to="{ name: 'Home' }">Home</router-link>
+                    </b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav class="social-icons align-items-center">
                     <Instagram />
                     <Facebook />
                     <Twitter />
-                    <b-nav-item href="#" style="min-width: 300px"
-                        >
+                </b-navbar-nav>
+                <b-navbar-nav>
                         <account-menu v-if="isLoggedIn"></account-menu>
                         <guests-menu v-else></guests-menu>
-                        </b-nav-item
-                    >
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>

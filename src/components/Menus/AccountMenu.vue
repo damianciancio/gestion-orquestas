@@ -1,10 +1,7 @@
 <template>
-  <div>
-    <router-link :to="{ name: 'UserProfile', params: { id: currentUser.id} }">Mi cuenta</router-link>
-    |
-    <router-link :to="{ name: 'MyTickets' }">Mis Entradas</router-link>
-    |
-    <button class="btn btn-link" v-on:click="logout">Cerrar sesión</button>
+  <div class="d-flex justify-content-between">
+    <router-link :to="{ name: 'UserProfile', params: { id: currentUser.id} }">Mi cuenta</router-link><span>|</span><router-link :to="{ name: 'MyTickets' }">Mis Entradas</router-link>
+    <span>|</span><a class="btn-link" v-on:click="logout">Cerrar sesión</a>
   </div>
 </template>
 <script>
@@ -22,3 +19,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+a {
+  padding: 0 20px;
+}
+</style>

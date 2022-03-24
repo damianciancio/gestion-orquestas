@@ -16,7 +16,7 @@
             <label>Cantidad</label>
             <input class="form-control" type="number" v-model="quantity" />
           </div>
-          <button class="btn btn-primary" v-on:click="buyTickets" style="margin-bottom: 20px;">
+          <button class="grm-link-button" v-on:click="buyTickets" style="margin-bottom: 20px;">
             Confirmar
           </button>
           <!--template>{{ mpResponse }}</template-->
@@ -26,7 +26,7 @@
             <label>Cantidad: 2</label>
           </div>
         </div>
-        <div id="button-checkout"></div>
+        <!-- <div id="button-checkout" class="grm-link-button"></div> -->
       </div>
     </div>
   </div>
@@ -73,10 +73,7 @@ export default {
           preference: {
             id: this.preferenceId
           },
-          render: {
-            container: "#button-checkout", // Class name where the payment button will be displayed
-            label: "Pagar!" // Change the payment button text (optional)
-          }
+          autoOpen: true,
         });
       }
     }
