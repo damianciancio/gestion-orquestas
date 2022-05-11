@@ -11,7 +11,7 @@
         <h4><Calendar></Calendar> {{ show.date | datetime }}</h4>
         <h4><Pin></Pin>{{ show.place }}</h4>
         <h5>{{ show.price | money }}</h5>
-        <div v-if="!mpResponse">
+        <div v-if="true">
           <div style="margin-bottom: 20px;">
             <label>Cantidad</label>
             <input class="form-control" type="number" v-model="quantity" />
@@ -23,7 +23,7 @@
         </div>
         <div v-else>
           <div style="margin-bottom: 20px;">
-            <label>Cantidad: 2</label>
+            <label>Cantidad: {{ quantity }}</label>
           </div>
         </div>
         <!-- <div id="button-checkout" class="grm-link-button"></div> -->
@@ -80,7 +80,6 @@ export default {
   },
   methods: {
     buyTickets() {
-      console.log(this.currentUser.id);
       const request = axios.post("/api/mercadopago", {
         user_id: this.currentUser.id,
         quantity: this.quantity,

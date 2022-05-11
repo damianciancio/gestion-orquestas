@@ -13,7 +13,7 @@ import axios from "@/helpers/axiosInterceptor";
 export default {
     data() {
         return {
-            aNew: {
+            show: {
                 name: "",
                 date: "",
                 place: "",
@@ -32,6 +32,7 @@ export default {
                 params: { id: this.$route.params.id },
             });
             request.then((resp) => {
+                console.log(resp);
                 this.show = resp.data;
                 this.mode = "edit";
             });

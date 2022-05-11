@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" data-app>
     <admin-layout v-if="currentLayout == 'admin'">
       <router-view />
     </admin-layout>
@@ -32,8 +32,8 @@ export default {
     return {
     };
   },
-  created(){
-
+  mounted(){
+    this.$toastr.defaultPosition = "toast-bottom-right";
   },
   computed: {
     users() {

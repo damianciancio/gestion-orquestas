@@ -62,7 +62,7 @@ import CheckInput from "../UI/CheckInput.vue";
 import SelectInput from "../UI/SelectInput.vue";
 
 export default {
-    props: ["editNew", "mode"],
+    props: ["editShow", "mode"],
     components: {
         TextInput,
         TextAreaInput,
@@ -72,14 +72,14 @@ export default {
     },
     mixins: [validationMixin],
     watch: {
-        editNew(newVal) {
-            this.aNew = {
+        editShow(newVal) {
+            this.show = {
                 ...newVal,
                 publicDate: newVal.publicDate
-                    ? moment(newVal.publicDate).format("YYYY-MM-DD")
+                    ? moment(newVal.publicDate).format("YYYY-MM-DDTHH:mm:ss")
                     : "",
                 date: newVal.date
-                    ? moment(newVal.date).format("YYYY-MM-DD")
+                    ? moment(newVal.date).format("YYYY-MM-DDTHH:mm:ss")
                     : "",
             };
         },

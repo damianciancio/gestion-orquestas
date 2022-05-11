@@ -6,20 +6,22 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/payment/:id/buy/failed',
+    path: '/payment/buy/failed',
     name: 'PagoFallido',
     component: () => import(/* webpackChunkName: "FailedPayment" */ '../views/shows/FailedPayment.vue'),
     meta: {
       requiresAuth: true,
-      layout: 'user'
+      layout: 'user',
+      title: 'Pago fallido',
     }
-  }, 
+  },
   {
-    path: '/payment/:id/buy/success',
+    path: '/payment/buy/success',
     name: 'PagoAprobado',
     component: () => import(/* webpackChunkName: "register" */ '../views/shows/SuccessfullPayment.vue'),
     meta: {
       requiresAuth: true,
+      title: 'Pago exitoso',
       link_name: 'PaymentSuccessfull',
       layout: 'user'
     }
@@ -29,6 +31,7 @@ const routes = [
     name: 'Register',
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
     meta: {
+      title: 'Registrarse',
       guest: true,
       link_name: 'Registrarse',
     },
@@ -38,7 +41,7 @@ const routes = [
     name: 'NewView',
     component: () => import( /* webpackChunkName: "register" */ '../views/news/NewView.vue'),
     meta: {
-      guest: true,
+      title: 'Noticia',
     },
   },
   {
@@ -47,14 +50,62 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
     meta: {
       guest: true,
+      title: 'Login',
       link_name: 'Log In',
     },
+  },
+  {
+    path: '/admin/social',
+    name: 'Redes',
+    component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/Social.vue'),
+    meta: {
+      requiresAuth: true,
+      title: 'Redes sociales',
+      is_admin: true,
+      link_name: 'Redes Sociales'
+    },
+    redirect: { name: 'SocialList' },
+    children: [
+      {
+        path: '',
+        name: 'SocialList',
+        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialList.vue'),
+        meta: {
+          requiresAuth: true,
+          title: 'Redes Sociales',
+          is_admin: true,
+          link_name: 'Redes sociales'
+        },
+      },
+      {
+        path: 'add',
+        name: 'addSocial',
+        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          title: 'Agregar red',
+          link_name: 'Redes'
+        },
+      },
+      {
+        path: ':id/editar',
+        name: 'EditSocial',
+        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialAdd.vue'),
+        meta: {
+          requiresAuth: true,
+          is_admin: true,
+          link_name: 'edicionred'
+        },
+      },
+    ]
   },
   {
     path: '/user/:id',
     name: 'UserProfile',
     component: () => import('../views/UserProfile.vue'),
     meta: {
+      title: 'Perfil de usuario',
       requiresAuth: true
     }
   },
@@ -64,6 +115,7 @@ const routes = [
     component: () => import('../views/shows/Show.vue'),
     meta: {
       requiresAuth: false,
+      title: 'Show',
       link_name: 'ShowView',
       layout: 'user'
     },
@@ -74,6 +126,7 @@ const routes = [
     component: () => import('../views/shows/BuyTickets.vue'),
     meta: {
       requiresAuth: true,
+      title: 'Comprar entrada',
       link_name: 'BuyTickets',
       layout: 'user'
     },
@@ -85,6 +138,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       link_name: 'MyTickets',
+      title: 'Mis entradas',
       layout: 'user',
     }
   },
@@ -94,6 +148,7 @@ const routes = [
     component: Home,
     meta: {
       requiresAuth: false,
+      title: 'Home',
       link_name: 'Home',
       layout: 'user-home'
     },
@@ -104,6 +159,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
     meta: {
       requiresAuth: true,
+      title: 'Dashboard',
       is_admin: true,
       link_name: 'Dashboard',
     },
@@ -114,6 +170,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "usermanagement" */ '../views/MusicalResources.vue'),
     meta: {
       requiresAuth: true,
+      title: 'Recursos',
       is_admin: true,
       link_name: 'Recursos'
     },
@@ -125,6 +182,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "usermanagement" */ '../views/MusicalResourcesList.vue'),
         meta: {
           requiresAuth: true,
+          title: 'Recursos',
           is_admin: true,
           link_name: 'Recursos'
         },
@@ -136,6 +194,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           is_admin: true,
+          title: 'Nuevo recurso',
           link_name: 'Recursos'
         },
       },
@@ -146,6 +205,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           is_admin: true,
+          title: 'Recurso',
           link_name: 'VistaRecurso'
         },
       },
@@ -169,6 +229,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       is_admin: true,
+      title: 'Usuario',
       link_name: 'Usuarios',
     },
     children: [
@@ -179,6 +240,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           is_admin: true,
+          title: 'Usuarios',
           link_name: 'Gestión de Usuarios'
         },
       },
@@ -188,6 +250,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "useradd" */ '../views/UserAdd.vue'),
         meta: {
           requiresAuth: true,
+          title: 'Crear usuario',
           is_admin: true,
           link_name: 'Crear Usuario',
         },
@@ -199,6 +262,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           is_admin: true,
+          title: 'Editar usuario',
           link_name: 'Editar Usuario'
         }
       }
@@ -211,9 +275,10 @@ const routes = [
     meta: {
       requiresAuth: true,
       is_admin: true,
+      title: 'Noticias',
       link_name: 'Noticias'
     },
-    redirect: {name: 'NewsList'},
+    redirect: { name: 'NewsList' },
     children: [
       {
         path: '',
@@ -222,6 +287,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           is_admin: true,
+          title: 'Noticias',
           link_name: 'Noticias'
         }
       },
@@ -232,7 +298,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           is_admin: true,
-          link_name: 'Crear Noticia',
+          title: 'Crear noticia',
         },
       },
       {
@@ -241,8 +307,9 @@ const routes = [
         component: () => import(/* webpackChunkName: "useradd" */ '../views/news/NewAdd.vue'),
         meta: {
           requiresAuth: true,
+          link_name: 'Editar Noticia',
           is_admin: true,
-          link_name: 'Editar Noticia'
+          title: 'Editar noticia',
         }
       }
     ]
@@ -254,7 +321,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       is_admin: true,
-      link_name: 'Escanear entradas',
+      title: 'Escanear entradas',
     }
   },
   {
@@ -264,9 +331,10 @@ const routes = [
     meta: {
       requiresAuth: true,
       is_admin: true,
-      link_name: 'Shows'
+      link_name: 'Shows',
+      title: 'Shows',
     },
-    redirect: {name: 'ShowsList'},
+    redirect: { name: 'ShowsList' },
     children: [
       {
         path: '',
@@ -275,7 +343,8 @@ const routes = [
         meta: {
           requiresAuth: true,
           is_admin: true,
-          link_name: 'Shows'
+          link_name: 'Shows',
+          title: 'Shows',
         }
       },
       {
@@ -286,6 +355,7 @@ const routes = [
           requiresAuth: true,
           is_admin: true,
           link_name: 'Crear show',
+          title: 'Nuevo show',
         },
       },
       {
@@ -295,7 +365,8 @@ const routes = [
         meta: {
           requiresAuth: true,
           is_admin: true,
-          link_name: 'Editar Show'
+          link_name: 'Editar Show',
+          title: 'Editar Show',
         }
       }
     ]
@@ -303,12 +374,15 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });
 
 router.beforeEach((to, from, next) => {
+
+  document.title = to.meta.title;
+
   console.log("to", to)
   console.log("from", from)
   console.log("from", from)

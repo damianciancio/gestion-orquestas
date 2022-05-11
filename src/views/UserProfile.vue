@@ -6,14 +6,14 @@
         <div class="d-flex space-between">
             <div class="card user-general-info">
                 <div class="card-body">
-                    <h5>
+                    <h5>Email: 
                         {{ user.email }}
                     </h5>
-                    <h5>
+                    <h5>Nombre:
                         {{ user.name }}
                         {{ user.lastname }}
                     </h5>
-                    <h5>{{ user.address }}</h5>
+                    <h5>Dirección: {{ user.address }}</h5>
                 </div>
             </div>
             <div class="card">

@@ -60,6 +60,7 @@ export default {
         });
         this.ticketsByShow = shows;
     } catch (error) {
+      console.log(error.response)
       this.errorOnLoad = true;
     } finally {
       this.loadingUserShows = false;

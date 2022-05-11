@@ -38,7 +38,7 @@ $fontColor: #ffffff;
 
     a {
         font-weight: $boldWeight;
-        color: $primaryColor !important;
+        color: $primaryColor;
 
         &.nav-link {
             text-transform: uppercase;

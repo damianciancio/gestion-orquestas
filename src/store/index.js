@@ -18,8 +18,19 @@ export default new Vuex.Store({
     currentUser: window.localStorage.getItem('user')
       ? JSON.parse(window.localStorage.getItem('user'))
       : null,
+    loading: 0,
   },
   mutations: {
+    setLoading(state, isLoading) {
+      console.log()
+      if (isLoading) {
+        state.loading++;
+      } else if(state.loading === 0) {
+        return;
+      } else {
+        state.loading--;
+      }
+    },
     setUsers(state, users) {
       state.users = users;
     },
@@ -111,30 +122,43 @@ export default new Vuex.Store({
         });
 
     },
+    deleteShow(store, id) {
+      const request = axios.delete(`/api/shows/`, { params: { id: id } });
+      request
+        .catch((err) => {
+          console.log(err);
+        });
+
+    },
     async login(store, { username, password }) {
       
-      try {
-
-        const resp = await axios.post('/api/login', {
-          username: username,
-          password: password,
-        });
-        
+      const req = axios.post('/api/login', {
+        username: username,
+        password: password,
+      });
+      store.commit('setLoading', true);
+      req.then(async (resp) => {
         const data = resp.data;
         // const data = resp.data;
-
-        console.log(data);
-
         window.localStorage.setItem('jwt', data.jwt);
         
-        const currentUser = await axios.get('/api/users', { params: { username: data.username } });
+        store.commit('setLoading', true);
+        try {
+          const currentUser = await axios.get('/api/users', { params: { username: data.username } });
+          
+          window.localStorage.setItem('user', JSON.stringify(currentUser.data));
+          store.commit('setCurrentUser', currentUser.data);
+        } catch (error) {
+          
+        } finally {
+          store.commit('setLoading', false);
+        }
+      }).finally(() => {
+        store.commit('setLoading', false);
         
-        window.localStorage.setItem('user', JSON.stringify(currentUser.data));
-        store.commit('setCurrentUser', currentUser.data);
-        return resp;
-      } catch(error) {
-        
-      }
+      });
+      
+      return req;
 
     },
     logout(store) {
@@ -171,6 +195,9 @@ export default new Vuex.Store({
     },
     isLoggedIn({currentUser}) {
       return currentUser !== null;
+    },
+    isLoading({loading}) {
+      return loading > 0;
     }
   },
   modules: {

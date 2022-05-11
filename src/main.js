@@ -17,7 +17,12 @@ import Multiselect from 'vue-multiselect';
 import formatMixin from './mixins/FormatMixin';
 
 import TextInput from './components/UI/TextInput.vue';
-import VueQRCodeComponent from 'vue-qrcode-component'
+import VueQRCodeComponent from 'vue-qrcode-component';
+import VueToastr from "vue-toastr";
+// use plugin
+Vue.use(VueToastr, {
+  /* OverWrite Plugin Options if you need */
+});
 Vue.component('qr-code', VueQRCodeComponent)
 
 Vue.use(BootstrapVue);
