@@ -269,6 +269,54 @@ const routes = [
     ]
   },
   {
+    path: '/docs',
+    name: 'Docs',
+    component: () => import('../views/docs/Docs'),
+    meta: {
+      requiresAuth: true,
+      is_docs: true,
+      title: 'Documentacion',
+      link_name: 'Documentacion',
+      layout: 'docs',
+    },
+    children: [
+      {
+        path: '/docs',
+        component: () => import('../views/docs/Index'),
+        name: 'IndiceDocs',
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          title: 'Indice',
+          link_name: 'Indice',
+          layout: 'docs',
+        },
+      },
+      {
+        path: '/docs/resources',
+        component: () => import('../views/docs/ResourcesDocs'),
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          title: 'Recursos Musicales',
+          link_name: 'Recursos musicales',
+          layout: 'docs',
+        },
+      },
+      {
+        path: '/docs/news',
+        component: () => import('../views/docs/NewsDocs'),
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          title: 'Noticias',
+          link_name: 'Noticias',
+          layout: 'docs',
+        },
+      }
+    ]
+  },
+  {
     path: '/admin/news',
     name: 'NewsManagement',
     component: () => import('../views/news/NewsManagement'),

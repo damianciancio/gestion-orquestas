@@ -12,6 +12,9 @@
     <user-home-layout v-if="currentLayout == 'user-home'">
       <router-view />
     </user-home-layout>
+    <docs-layout v-if="currentLayout == 'docs'">
+      <router-view />
+    </docs-layout>
   </div>
 </template>
 <script>
@@ -19,6 +22,7 @@ import AdminLayout from './layouts/AdminLayout.vue';
 import UserLayout from './layouts/UserLayout.vue';
 import UserHomeLayout from './layouts/UserHomeLayout.vue';
 import RegistrationLayout from './layouts/RegistrationLayout.vue';
+import DocsLayout from './layouts/DocsLayout.vue';
 
 
 export default {
@@ -26,6 +30,7 @@ export default {
     'admin-layout': AdminLayout,
     'user-layout': UserLayout,
     'registration-layout': RegistrationLayout,
+    'docs-layout': DocsLayout,
     UserHomeLayout,
   },
   data() {

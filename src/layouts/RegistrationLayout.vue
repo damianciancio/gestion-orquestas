@@ -1,16 +1,51 @@
 <template>
-    <div id="registration-layout">
-        <slot></slot>
+    <div id="docs-layout" class="container-fluid h-100">
+        <div class="">
+            <docs-menu></docs-menu>
+            <main class="col">
+                <nav class="d-flex justify-content-between">
+                    <div>
+                        <h1>{{ title }}</h1>
+                    </div>
+                    <account-menu></account-menu>
+                </nav>
+                <section>
+                    <slot></slot>
+                </section>
+            </main>
+        </div>
     </div>
 </template>
-<style lang="scss" scoped>
-#registration-layout {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+<script>
+import AdminMenu from "@/components/Menus/AdminMenu.vue";
+import AccountMenu from "../components/Menus/AccountMenu.vue";
 
-    background-color: var(--light);
+export default {
+    components: {
+        "admin-menu": AdminMenu,
+        "account-menu": AccountMenu,
+    },
+    computed: {
+        title() {
+            return this.$route.meta.link_name;
+        },
+    },
+};
+</script>
+<style lang="scss">
+#admin-layout > div > main > section {
+    padding: 20px 80px;
 }
+#admin-layout > div > main > nav {
+    padding: 30px 80px;
+    border-bottom: 1px solid var(--light);
+}
+
+@media (max-width: 500px)  {
+    #admin-layout nav {
+        background-color: 'red';    
+    }
+}
+
+
 </style>

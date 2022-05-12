@@ -20,6 +20,13 @@
                             >{{ link.meta.link_name }}</router-link
                         >
                     </li>
+                    <li class="nav-item">
+                        <router-link
+                            class="nav-link pl-0"
+                            :to="{ name: 'IndiceDocs' }"
+                            >Ayuda</router-link
+                        >
+                    </li>
                 </ul>
             </div>
         </b-sidebar>

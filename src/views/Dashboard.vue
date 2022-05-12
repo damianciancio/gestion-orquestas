@@ -1,21 +1,21 @@
 <template>
   <div>
-    <a class="dashboard-card" :href="resourcesHref">
+    <router-link class="dashboard-card" :to="resourcesRoute">
       <div class="dashboard-card-icon"><Music :size="48"></Music></div>
       <div><h1>Recursos</h1></div>
-    </a>
-    <a class="dashboard-card" :href="usersHref">
+    </router-link>
+    <router-link class="dashboard-card" :to="usersRoute">
       <div class="dashboard-card-icon"><Account :size="48"></Account></div>
       <div><h1>Usuarios</h1></div>
-    </a>
-    <a class="dashboard-card" :href="newsHref">
+    </router-link>
+    <router-link class="dashboard-card" :to="newsRoute">
       <div class="dashboard-card-icon"><Newspaper :size="48"></Newspaper></div>
       <div><h1>Noticias</h1></div>
-    </a>
-    <a class="dashboard-card" :href="showsHref">
+    </router-link>
+    <router-link class="dashboard-card" :to="showsRoute">
       <div class="dashboard-card-icon"><Theater :size="48"></Theater></div>
       <div><h1>Shows</h1></div>
-    </a>
+    </router-link>
   </div>
 </template>
 <script>
@@ -33,21 +33,21 @@ export default {
     Theater
   },
   computed: {
-    resourcesHref() {
+    resourcesRoute() {
       const route = this.$router.options.routes.find(r => r.name === "Recursos");
-      return route.path;
+      return route;
     },
-    usersHref() {
+    usersRoute() {
       const route = this.$router.options.routes.find(r => r.name === "Usuarios");
-      return route.path;
+      return route;
     },
-    newsHref() {
+    newsRoute() {
       const route = this.$router.options.routes.find(r => r.name === "NewsManagement");
-      return route.path;
+      return route;
     },
-    showsHref() {
+    showsRoute() {
       const route = this.$router.options.routes.find(r => r.name === "ShowsManagement");
-      return route.path;
+      return route;
     },
   }
 };

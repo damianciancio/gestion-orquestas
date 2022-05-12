@@ -43,7 +43,7 @@
     </div>
       <div v-else>
         <h1>Agregar canción</h1>
-        <song-form v-on:submit="addSong($event)" :edit-song="proposedSong">
+        <song-form id="add-song-form" v-on:submit="addSong($event)" :edit-song="proposedSong">
         </song-form>
       </div>
   </div>
@@ -125,11 +125,12 @@ export default {
     addSong(song) {
       const request = this.$store.dispatch("addSong", song);
       request.then((response) => {
+        console.log(response);
         this.$store.dispatch("fetchSongs").then(() => {
           this.resource.song = response.data;
           this.openAddSongModal = false;
         });
-      }).finally(() => this.view = 'normal');
+      }).catch(e => console.log(e.response)).finally(() => this.view = 'normal');
     },
     addSongView(songName) {
       this.view = 'addingSong';
@@ -138,3 +139,9 @@ export default {
   },
 };
 </script>
+<style>
+#add-song-form .v-application--wrap {
+  height: 100px;
+  min-height: 100px;
+}
+</style>
