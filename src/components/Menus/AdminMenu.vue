@@ -13,6 +13,16 @@
                         justify-content-between
                     "
                 >
+                    <li
+                        class="nav-item"
+                    >
+                        <router-link
+                            class="nav-link pl-0"
+                            :to="{name: 'Home'}"
+                        >
+                            Home
+                        </router-link>
+                    </li>
                     <li v-for="link in links" :key="link.name" class="nav-item">
                         <router-link
                             class="nav-link pl-0"
