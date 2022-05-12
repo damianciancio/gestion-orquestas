@@ -54,52 +54,52 @@ const routes = [
       link_name: 'Log In',
     },
   },
-  {
-    path: '/admin/social',
-    name: 'Redes',
-    component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/Social.vue'),
-    meta: {
-      requiresAuth: true,
-      title: 'Redes sociales',
-      is_admin: true,
-      link_name: 'Redes Sociales'
-    },
-    redirect: { name: 'SocialList' },
-    children: [
-      {
-        path: '',
-        name: 'SocialList',
-        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialList.vue'),
-        meta: {
-          requiresAuth: true,
-          title: 'Redes Sociales',
-          is_admin: true,
-          link_name: 'Redes sociales'
-        },
-      },
-      {
-        path: 'add',
-        name: 'addSocial',
-        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialAdd.vue'),
-        meta: {
-          requiresAuth: true,
-          is_admin: true,
-          title: 'Agregar red',
-          link_name: 'Redes'
-        },
-      },
-      {
-        path: ':id/editar',
-        name: 'EditSocial',
-        component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialAdd.vue'),
-        meta: {
-          requiresAuth: true,
-          is_admin: true,
-          link_name: 'edicionred'
-        },
-      },
-    ]
-  },
+  // {
+  //   path: '/admin/social',
+  //   name: 'Redes',
+  //   component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/Social.vue'),
+  //   meta: {
+  //     requiresAuth: true,
+  //     title: 'Redes sociales',
+  //     is_admin: true,
+  //     link_name: 'Redes Sociales'
+  //   },
+  //   redirect: { name: 'SocialList' },
+  //   children: [
+  //     {
+  //       path: '',
+  //       name: 'SocialList',
+  //       component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialList.vue'),
+  //       meta: {
+  //         requiresAuth: true,
+  //         title: 'Redes Sociales',
+  //         is_admin: true,
+  //         link_name: 'Redes sociales'
+  //       },
+  //     },
+  //     {
+  //       path: 'add',
+  //       name: 'addSocial',
+  //       component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialAdd.vue'),
+  //       meta: {
+  //         requiresAuth: true,
+  //         is_admin: true,
+  //         title: 'Agregar red',
+  //         link_name: 'Redes'
+  //       },
+  //     },
+  //     {
+  //       path: ':id/editar',
+  //       name: 'EditSocial',
+  //       component: () => import(/* webpackChunkName: "usermanagement" */ '../views/social/SocialAdd.vue'),
+  //       meta: {
+  //         requiresAuth: true,
+  //         is_admin: true,
+  //         link_name: 'edicionred'
+  //       },
+  //     },
+  //   ]
+  // },
   {
     path: '/user/:id',
     name: 'UserProfile',
@@ -304,6 +304,17 @@ const routes = [
         },
       },
       {
+        path: '/docs/users',
+        component: () => import('../views/docs/UsersDocs'),
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          title: 'Usuarios',
+          link_name: 'Usuarios',
+          layout: 'docs',
+        },
+      },
+      {
         path: '/docs/news',
         component: () => import('../views/docs/NewsDocs'),
         meta: {
@@ -313,7 +324,66 @@ const routes = [
           link_name: 'Noticias',
           layout: 'docs',
         },
+      },
+      {
+        path: '/docs/shows',
+        component: () => import('../views/docs/ShowsDocs'),
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          title: 'Shows',
+          link_name: 'Shows',
+          layout: 'docs',
+        },
+      },{
+        path: '/docs/register',
+        component: () => import('../views/docs/RegisterDocs'),
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          title: 'Registrarse',
+          link_name: 'Registrarse',
+          for_guest: true,
+          layout: 'docs',
+        },
+      },
+      {
+        path: '/docs/login',
+        component: () => import('../views/docs/LoginDocs'),
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          title: 'Inicio de Sesión',
+          link_name: 'Inicio de Sesión',
+          for_guest: true,
+          layout: 'docs',
+        },
       }
+,
+      {
+        path: '/docs/showPurchase',
+        component: () => import('../views/docs/showPurchaseDocs'),
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          title: 'Shows y Entradas',
+          link_name: 'Shows y Entradas',
+          for_guest: true,
+          layout: 'docs',
+        },
+      },
+      {
+        path: '/docs/guestNews',
+        component: () => import('../views/docs/GuestNewsDocs'),
+        meta: {
+          requiresAuth: true,
+          is_docs: true,
+          for_guest: true,
+          title: 'Noticias',
+          link_name: 'Noticias',
+          layout: 'docs',
+        },
+      }	  
     ]
   },
   {
@@ -370,6 +440,7 @@ const routes = [
       requiresAuth: true,
       is_admin: true,
       title: 'Escanear entradas',
+      link_name: 'Escanear entradas',
     }
   },
   {

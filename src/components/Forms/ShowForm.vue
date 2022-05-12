@@ -41,6 +41,14 @@
             />
         </div>
         <div class="mb-3 col-md-12 col-xs-12">
+            <label>Precio</label>
+            <text-input
+                v-model="show.price"
+                :class="{ 'is-invalid': $v.show.price.$error }"
+                type="number"
+            />
+        </div>
+        <div class="mb-3 col-md-12 col-xs-12">
             <button class="btn btn-primary" type="button" v-on:click="submit">
                 Guardar
             </button>
@@ -53,7 +61,7 @@ import moment from "moment";
 import afterCurrentDateValidator from "@/helpers/vuelidate/afterCurrentDateValidator.js";
 
 import { validationMixin } from "vuelidate";
-import { required, integer } from "vuelidate/lib/validators";
+import { required, integer, minValue } from "vuelidate/lib/validators";
 
 import TextInput from "../UI/TextInput.vue";
 import TextAreaInput from "../UI/TextAreaInput.vue";
@@ -115,6 +123,11 @@ export default {
                 required,
                 afterCurrentDateValidator,
             },
+            price: {
+                required,
+                integer,
+                minValue: minValue(0),
+            }
         },
     },
     methods: {

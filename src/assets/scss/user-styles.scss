@@ -102,6 +102,9 @@ $fontColor: #ffffff;
         padding-top: 10px;
         padding-bottom: 10px;
     }
+    footer * {
+        background-color: black;
+    }
     @media screen and (max-width: 992px) {
         main {
             display: inline-block;

@@ -27,7 +27,14 @@
                 <slot></slot>
             </div>
         </main>
-        <footer>Charagua, suena la orilla</footer>
+        <footer>
+            <div class="d-flex justify-content-between">
+                <span>Charagua, suena la orilla</span>
+                <span class="mr-1">
+                    <router-link :to="{ name: 'IndiceDocs' }">Ayuda</router-link>
+                </span>
+            </div>
+        </footer>
     </div>
 </template>
 <script>
