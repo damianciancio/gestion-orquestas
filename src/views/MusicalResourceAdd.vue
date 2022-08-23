@@ -1,9 +1,8 @@
 <template>
   <div>
-    <div class="row d-flex justify-content-end">
-      <div class="col-md-2">
-        <button class="btn btn-primary" v-on:click="save">Guardar</button>
-      </div>
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-primary" style="margin-right: 5px;" v-on:click="save">Guardar</button>
+      <button class="btn btn-secondary" v-on:click="goBack">Volver</button>
     </div>
     <div v-if="view != 'addingSong'" class="row">
       <div class="col-md-4">
@@ -135,7 +134,10 @@ export default {
     addSongView(songName) {
       this.view = 'addingSong';
       this.proposedSong.title = songName;
-    }
+    },
+    goBack() {
+      this.$router.replace({ name: 'Recursos' });
+    },
   },
 };
 </script>

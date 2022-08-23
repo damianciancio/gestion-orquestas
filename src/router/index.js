@@ -27,6 +27,15 @@ const routes = [
     }
   },
   {
+    path: '/edit-my-profile',
+    name: 'EditMyProfile',
+    component: () => import('../views/EditMyProfile.vue'),
+    meta: {
+      title: 'Editar mi perfil',
+      requiresAuth: true,
+    },
+  },
+  {
     path: '/user/register',
     name: 'Register',
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),

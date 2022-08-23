@@ -51,6 +51,7 @@ import axios from "@/helpers/axiosInterceptor";
 import NewCard from "@/components/News/NewCard.vue";
 import { Carousel, Slide } from "vue-carousel";
 import NextShows from '../components/NextShows.vue';
+import moment from 'moment';
 
 export default {
     components: {
@@ -72,7 +73,13 @@ export default {
     },
     mounted() {
         axios.get("/api/news").then((response) => {
-            this.latestNews = response.data;
+            this.latestNews = response.data.sort((aNew, bNew) => {
+                if (moment(aNew.publicDate).isBefore(moment(bNew.publicDate))) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
         });
         axios.get("/api/shows").then((response) => {
             this.nextShows = response.data;

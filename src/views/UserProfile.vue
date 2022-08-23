@@ -3,10 +3,14 @@
         <h1>
             {{ user.username }}
         </h1>
-        <div class="d-flex space-between">
+        <div class="d-flex general-container space-between">
             <div class="card user-general-info">
                 <div class="card-body">
-                    <h5>Email: 
+                    <div class="d-flex justify-content-between" v-if="isCurrenUser">
+                        <h4>Información del usuario</h4>
+                        <router-link :to="{ name: 'EditMyProfile' }">Editar</router-link>
+                    </div>
+                    <h5>Email:
                         {{ user.email }}
                     </h5>
                     <h5>Nombre:
@@ -34,48 +38,51 @@
     </div>
 </template>
 <script>
-import axios from "@/helpers/axiosInterceptor";
-import isAdmin from "@/helpers/isAdmin.js";
+import axios from '@/helpers/axiosInterceptor';
+import isAdmin from '@/helpers/isAdmin.js';
 
 export default {
-    async mounted() {
-        const user_id = this.$route.params.id;
+  async mounted() {
+    const user_id = this.$route.params.id;
 
-        if (this.currentUser.id != user_id && !isAdminUserLoggedIn()) {
-            this.$router.replace({ name: "Home" });
-        }
-        this.loading = true;
-        try {
-            this.user = (
-                await axios.get("/api/users/", { params: { id: user_id } })
-            ).data;
-            this.$route.meta.title = this.user.username;
-        } catch (error) {
-        } finally {
-            this.loading = false;
-        }
+    if (this.currentUser.id != user_id && !isAdminUserLoggedIn()) {
+      this.$router.replace({ name: 'Home' });
+    }
+    this.loading = true;
+    try {
+      this.user = (
+        await axios.get('/api/users/', { params: { id: user_id } })
+      ).data;
+      this.$route.meta.title = this.user.username;
+    } catch (error) {
+    } finally {
+      this.loading = false;
+    }
+  },
+  data() {
+    return {
+      user: {},
+    };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.getters.currentUser;
     },
-    data() {
-        return {
-            user: null,
-        };
+    isAdminUserLoggedIn() {
+      return isAdmin(this.currentUser.rolesUser);
     },
-    computed: {
-        currentUser() {
-            return this.$store.getters.currentUser;
-        },
-        isAdminUserLoggedIn() {
-            return isAdmin(this.currentUser.rolesUser);
-        },
+    isCurrenUser() {
+      return this.currentUser.id == this.$route.params.id;
     },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .user-general-info, .roles {
     flex-grow: 1;
-    margin: 5px;
+    margin-right: 5px;
 }
-.d-flex {
+.general-container {
     padding: 5px;
 }
 </style>

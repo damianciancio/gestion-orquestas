@@ -19,7 +19,7 @@
 </template>
 <script>
 export default {
-    props: ["aNew"],
+  props: ['aNew'],
 };
 </script>
 <style lang="scss" scoped>
