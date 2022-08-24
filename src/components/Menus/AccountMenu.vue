@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between" style="font-size: 13px;">
     <router-link :to="{ name: 'UserProfile', params: { id: currentUser.id } }"
       >Mi cuenta</router-link
     ><span>|</span><router-link :to="{ name: 'MyTickets' }">Mis Entradas</router-link> <span>|</span
