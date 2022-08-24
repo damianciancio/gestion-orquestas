@@ -37,7 +37,7 @@
             />
         </div>
         <div class="mb-3 col-md-6 col-xs-12">
-            <input type="checkbox" id="enabled" v-model="aNew.enabled" /> 
+            <input type="checkbox" id="enabled" v-model="aNew.enabled" />
             <label for="enabled">Habilitado</label>
         </div>
         <div class="mb-3 col-md-12 col-xs-12">
@@ -48,77 +48,77 @@
     </form>
 </template>
 <script>
-import axios from "@/helpers/axiosInterceptor";
-import moment from "moment";
+import moment from 'moment';
 
-import afterCurrentDateValidator from "@/helpers/vuelidate/afterCurrentDateValidator.js";
+import { validationMixin } from 'vuelidate';
+import {
+  required,
+} from 'vuelidate/lib/validators';
+import axios from '@/helpers/axiosInterceptor';
 
-import { validationMixin } from "vuelidate";
-import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
-
-import TextInput from "../UI/TextInput.vue";
-import TextAreaInput from "../UI/TextAreaInput.vue";
-import DateInput from "../UI/DateInput.vue";
-import CheckInput from "../UI/CheckInput.vue";
-import SelectInput from "../UI/SelectInput.vue";
+import TextInput from '../UI/TextInput.vue';
+import TextAreaInput from '../UI/TextAreaInput.vue';
+import DateInput from '../UI/DateInput.vue';
+import SelectInput from '../UI/SelectInput.vue';
 
 export default {
-    props: ["editNew", "mode"],
-    components: { TextInput, TextAreaInput, DateInput, CheckInput, SelectInput },
-    mixins: [validationMixin],
-    watch: {
-        editNew(newVal) {
-            this.aNew = {
-                ...newVal,
-                publicDate: newVal.publicDate
-                    ? moment(newVal.publicDate).format("YYYY-MM-DD")
-                    : "",
-            };
-        },
+  props: ['editNew', 'mode'],
+  components: {
+    TextInput, TextAreaInput, DateInput, SelectInput,
+  },
+  mixins: [validationMixin],
+  watch: {
+    editNew(newVal) {
+      this.aNew = {
+        ...newVal,
+        publicDate: newVal.publicDate
+          ? moment(newVal.publicDate).format('YYYY-MM-DD')
+          : '',
+      };
     },
-    data() {
-        return {
-            aNew: {
-                title: "",
-                body: "",
-                author: "",
-                enabled: true,
-            },
-            users: [],
-        };
+  },
+  data() {
+    return {
+      aNew: {
+        title: '',
+        body: '',
+        author: '',
+        enabled: true,
+      },
+      users: [],
+    };
+  },
+  validations: {
+    aNew: {
+      title: {
+        required,
+      },
+      body: {
+        required,
+      },
+      author: {
+        required,
+      },
+      publicDate: {
+        required,
+      },
     },
-    validations: {
-        aNew: {
-            title: {
-                required,
-            },
-            body: {
-                required,
-            },
-            author: {
-                required,
-            },
-            publicDate: {
-                required,
-                afterCurrentDateValidator,
-            },
-        },
-    },
-    mounted() {
-        const usersRequest = axios.get("/api/users");
+  },
+  mounted() {
+    const usersRequest = axios.get('/api/users');
 
-        usersRequest.then((resp) => {
-            this.users = resp.data;
-        });
+    usersRequest.then((resp) => {
+      this.users = resp.data;
+    });
+  },
+  methods: {
+    submit() {
+      console.log(this.aNew);
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.$emit('submit', this.aNew);
+      }
     },
-    methods: {
-        submit() {
-            console.log(this.aNew)
-            this.$v.$touch();
-            if (!this.$v.$invalid) {
-                this.$emit("submit", this.aNew);
-            }
-        },
-    },
+  },
 };
 </script>

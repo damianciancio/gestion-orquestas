@@ -56,88 +56,86 @@
     </form>
 </template>
 <script>
-import moment from "moment";
+import moment from 'moment';
 
-import afterCurrentDateValidator from "@/helpers/vuelidate/afterCurrentDateValidator.js";
+import { validationMixin } from 'vuelidate';
+import { required, integer, minValue } from 'vuelidate/lib/validators';
+import afterCurrentDateValidator from '@/helpers/vuelidate/afterCurrentDateValidator.js';
 
-import { validationMixin } from "vuelidate";
-import { required, integer, minValue } from "vuelidate/lib/validators";
-
-import TextInput from "../UI/TextInput.vue";
-import TextAreaInput from "../UI/TextAreaInput.vue";
-import DateInput from "../UI/DateInput.vue";
-import CheckInput from "../UI/CheckInput.vue";
-import SelectInput from "../UI/SelectInput.vue";
+import TextInput from '../UI/TextInput.vue';
+import TextAreaInput from '../UI/TextAreaInput.vue';
+import DateInput from '../UI/DateInput.vue';
+import CheckInput from '../UI/CheckInput.vue';
+import SelectInput from '../UI/SelectInput.vue';
 
 export default {
-    props: ["editShow", "mode"],
-    components: {
-        TextInput,
-        TextAreaInput,
-        DateInput,
-        CheckInput,
-        SelectInput,
+  props: ['editShow', 'mode'],
+  components: {
+    TextInput,
+    TextAreaInput,
+    DateInput,
+    CheckInput,
+    SelectInput,
+  },
+  mixins: [validationMixin],
+  watch: {
+    editShow(newVal) {
+      this.show = {
+        ...newVal,
+        publicDate: newVal.publicDate
+          ? moment(newVal.publicDate).format('YYYY-MM-DDTHH:mm:ss')
+          : '',
+        date: newVal.date
+          ? moment(newVal.date).format('YYYY-MM-DDTHH:mm:ss')
+          : '',
+      };
     },
-    mixins: [validationMixin],
-    watch: {
-        editShow(newVal) {
-            this.show = {
-                ...newVal,
-                publicDate: newVal.publicDate
-                    ? moment(newVal.publicDate).format("YYYY-MM-DDTHH:mm:ss")
-                    : "",
-                date: newVal.date
-                    ? moment(newVal.date).format("YYYY-MM-DDTHH:mm:ss")
-                    : "",
-            };
-        },
+  },
+  data() {
+    return {
+      show: {
+        name: '',
+        place: '',
+        date: '',
+        publicDate: '',
+        tickets: null,
+      },
+    };
+  },
+  validations: {
+    show: {
+      name: {
+        required,
+      },
+      place: {
+        required,
+      },
+      tickets: {
+        required,
+        integer,
+      },
+      publicDate: {
+        required,
+      },
+      date: {
+        required,
+        afterCurrentDateValidator,
+      },
+      price: {
+        required,
+        integer,
+        minValue: minValue(0),
+      },
     },
-    data() {
-        return {
-            show: {
-                name: "",
-                place: "",
-                date: "",
-                publicDate: "",
-                tickets: null,
-            },
-        };
+  },
+  methods: {
+    submit() {
+      console.log(this.show);
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.$emit('submit', this.show);
+      }
     },
-    validations: {
-        show: {
-            name: {
-                required,
-            },
-            place: {
-                required,
-            },
-            tickets: {
-                required,
-                integer,
-            },
-            publicDate: {
-                required,
-                afterCurrentDateValidator,
-            },
-            date: {
-                required,
-                afterCurrentDateValidator,
-            },
-            price: {
-                required,
-                integer,
-                minValue: minValue(0),
-            }
-        },
-    },
-    methods: {
-        submit() {
-            console.log(this.show);
-            this.$v.$touch();
-            if (!this.$v.$invalid) {
-                this.$emit("submit", this.show);
-            }
-        },
-    },
+  },
 };
 </script>
